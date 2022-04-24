@@ -1,6 +1,6 @@
 # Mail Cannon
-*Beta*
-A simple project for email marketing. The goal will be a fully functioning email marketing suite rivalling many of the high priced systems on the market.
+![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/cannon.jpg)
+A simple project for email marketing. The goal is an open sourced fully functioning email marketing suite.
 
 
 ### Installation
