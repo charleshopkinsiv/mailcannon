@@ -1,7 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
+use MailCannon\Various\Registry;
+use MailCannon\Message\MessageSender;
 
 
 final class SendMessageTest extends TestCase

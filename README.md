@@ -6,8 +6,9 @@ A simple project for email marketing. The goal is an open sourced fully function
 
 ### Requirements
 
-It has only been tested on Ubuntu 18
-
+OS: Ubuntu
+Software: Postfix, PHP 7.4, MySQL, Composer
+PHP Libraries: 
 
 ### Installation
 
@@ -18,6 +19,9 @@ composer install
 sudo php install.php
 mailcannon
 ```
+
+To view info on running
+`man mailcannon`
 
 
 ### Features
@@ -54,19 +58,20 @@ mailcannon
 
 *Version 1.2 Treasure Fleet* - 10/2022
 
-* Automated server deployment and config
-
+* Enhanced tracking and optimization
+* Automated command server deployment and config
+* Postfix automated deployment and config to command server
+* Abstract deployment class, Uses API's to purchase cloud resources
+* 10+ deployment source child classes
+* Ability to deploy a large amount of sending servers at many locations
 
 
 ![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/kraken.jpg)
 
-*Version 1.3 Kraken* - 12/2022
+*Version 1.3 Kraken* **Private** - 12/2022
 
-* Postfix automated deployment and config
-* Abstract deployment class
-* 10+ deployment source child classes
-* Ability to deploy a large amount of sending servers at many locations
-* Machine Learning controlled I.P. management
+* I.P. reputation tracking
+* Machine Learning optimized I.P. management
 
 
 

@@ -14,7 +14,7 @@ class ManagerFactory
 
     private array $loaded_managers;
 
-    public function getManager(string $name)
+    public function getManager(string $name) : DomainManager 
     {
 
         if(!empty($this->loaded_managers[$name])

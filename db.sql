@@ -23,12 +23,17 @@ CREATE TABLE address_list (
 
 CREATE TABLE address_list_links (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    address_list_id INT NOT NULL DEFAULT 0,
-    address_id INT NOT NULL DEFAULT 0,
-    FOREIGN KEY (address_list_id) REFERENCES address_list(id),
-    FOREIGN KEY (address_id) REFERENCES address(id)
+    address_list INT NOT NULL DEFAULT 0,
+    address INT NOT NULL DEFAULT 0,
+    FOREIGN KEY (address_list) REFERENCES address_list(id),
+    FOREIGN KEY (address) REFERENCES address(id)
 );
 
 CREATE TABLE send_log (
-
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    datetime_sent DATETIME NOT NULL DEFAULT NOW(),
+    address INT NOT NULL DEFAULT 0,
+    message INT NOT NULL DEFAULT 0,
+    FOREIGN KEY (address) REFERENCES address(id),
+    FOREIGN KEY (message) REFERENCES message(id)
 );
