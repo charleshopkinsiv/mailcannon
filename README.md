@@ -28,7 +28,7 @@ mailcannon
 
 *Release 1.1* - 7/2022
 
-![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/cannon.jpg)
+![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/galleon.jpg)
 
 * Address tags
 * List message sequence's
