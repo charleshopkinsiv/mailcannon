@@ -7,9 +7,9 @@ class Address extends DomainObject
 {
 
     private int $id;
-    private string $subject, $body;
+    private string $subject, $template;
 
-    public function __construct($id, )
+    public function __construct($id, $subject, $template)
     {
 
 

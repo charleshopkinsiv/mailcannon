@@ -26,7 +26,10 @@ mailcannon
 * Address CRUD
 * List - Address Create / List / Delete
 
-*Release 1.1* - 6/2022
+*Release 1.1* - 7/2022
+
+![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/cannon.jpg)
+
 * Address tags
 * List message sequence's
 * Scheduled sends
