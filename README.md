@@ -13,15 +13,21 @@ PHP Libraries:
 ### Installation
 
 ```
-git clone git@github.com:charleshopkinsiv/mailcannon.git
-cd mailcannon
-composer install
-sudo php install.php
-mailcannon
-```
+$ git clone git@github.com:charleshopkinsiv/mailcannon.git
+$ cd mailcannon
+$ composer install
+$ sudo php install.php
+$ mailcannon
 
-To view info on running
-`man mailcannon`
+Welcome to MailCannon
+    - Make a selection below. . .
+    1. Send Message to Address
+    2. Send Message to Address List
+    3. Message Manager
+    4. Address Manager
+    5. Address List Manager
+    6. Send Log
+```
 
 
 ### Features
@@ -56,7 +62,7 @@ To view info on running
 
 ![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/fleet.jpg)
 
-*Version 1.2 Treasure Fleet* - 10/2022
+*Version 1.2 Treasure Fleet* **Private** - 10/2022
 
 * Enhanced tracking and optimization
 * Automated command server deployment and config

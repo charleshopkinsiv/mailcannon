@@ -10,11 +10,12 @@ final class SendMessageTest extends TestCase
 
     public function testSend(): void 
     {
+        
         $message =  Registry::getManagerFactory()->getManager("message")
-                        ->loadMessageById(1);
+                        ->loadById(1);
                                 
         $address =  Registry::getManagerFactory()->getManager("address")
-                        ->loadAddressById(1);
+                        ->loadById(1);
 
         $sender = new MessageSender();
         $send_reciept = $sender->sendMessage($message, $address);
