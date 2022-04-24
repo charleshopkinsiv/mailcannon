@@ -1,4 +1,5 @@
 # Mail Cannon
+*Beta*
 A simple project for email marketing. The goal will be a fully functioning email marketing suite rivalling many of the high priced systems on the market.
 
 
@@ -15,7 +16,7 @@ mailcannon
 
 ### Features
 
-*Release 1.0*
+*Release 1.0* - 5/2022
 * Send a message to an email address
 * Send a message to an addresss list
 * Message CRUD
@@ -24,13 +25,13 @@ mailcannon
 * Address CRUD
 * List - Address Create / List / Delete
 
-*Release 1.1*
+*Release 1.1* - 6/2022
 * Address tags
 * List message sequence's
 * Scheduled sends
 * Sending daemon
 
 
-![UML Class Diagram](https://github.com/charleshopkinsiv/mailcannon/public/img/uml.jpg)
+![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/uml.jpg)
 
 
