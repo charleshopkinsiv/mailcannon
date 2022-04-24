@@ -31,8 +31,8 @@ mailcannon
 * List message sequence's
 * Scheduled sends
 * Sending daemon
+* List import / export
+* Addresses import / export
 
 
 ![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/uml.jpg)
-
-

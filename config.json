@@ -4,5 +4,13 @@
         "database": "mc",
         "user": "mc",
         "password": "pw"
+    },
+    "smtp_server": {
+        "hostname": "localhost"
+    },
+    "test_reciever": {
+        "email": "test@gmail.com",
+        "password": "password",
+        "imap_server": "hostname"
     }
 }
