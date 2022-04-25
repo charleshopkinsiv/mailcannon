@@ -108,7 +108,6 @@ abstract class SqlDataMapper
         $sql = $this->buildQuery();
 
         return $this->db->query($sql)->resultSet();
-
     }
 
     public function getByEmail(string $email) {}
