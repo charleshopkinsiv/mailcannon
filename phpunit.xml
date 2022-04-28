@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="tests/bootstrap.php">
     <testsuites>
-        <directory suffix="Test.php">tests</directory>
+        <testsuite name="mail-cannon">
+            <directory suffix="Test.php">tests</directory>
+        </testsuite>
     </testsuites>
 
     <filter>

@@ -17,8 +17,8 @@ class ManagerFactory
     public function getManager(string $name) : DomainManager 
     {
 
-        if(!empty($this->loaded_managers[$name])
-        !empty(self::$managers[$name])) {
+        if(isset($this->loaded_managers[$name])
+        || isset(self::$managers[$name])) {
 
             $class_name                     = "\\MailCannon" . self::$managers[$name];
             $this->loaded_managers[$name]   = new $class_name();

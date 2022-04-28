@@ -18,17 +18,12 @@ class MailCannon
     public static function main()
     {
 
-        // Front controller if http
+        // Front Controller
 
-        // Check if command line
-        $controller = new CmdController($this);
-        $controller->run();
-    }
+            // Http request if http
 
-
-    public function sendMessageToAddress()
-    {
-
-
+            // Check if command line -> replace wiht CmdRequest
+            $controller = new CmdController(new self());
+            $controller->run();
     }
 }

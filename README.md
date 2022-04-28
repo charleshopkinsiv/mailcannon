@@ -7,7 +7,9 @@ A simple project for email marketing. The goal is an open sourced fully function
 ### Requirements
 
 OS: Ubuntu
+
 Software: Postfix, PHP 7.4, MySQL, Composer
+
 PHP Libraries: 
 
 ### Installation
@@ -38,11 +40,8 @@ Welcome to MailCannon
 *Release 1.0 Cannon* - 5/2022
 * Send a message to an email address
 * Send a message to an addresss list
-* Message CRUD
+* Address, Message, Message List
 * Hardcoded templates
-* List CRUD
-* Address CRUD
-* List - Address Create / List / Delete
 
 
 
@@ -66,7 +65,7 @@ Welcome to MailCannon
 
 * Enhanced tracking and optimization
 * Automated command server deployment and config
-* Postfix automated deployment and config to command server
+* Postfix relay server automated deployment and config to command server
 * Abstract deployment class, Uses API's to purchase cloud resources
 * 10+ deployment source child classes
 * Ability to deploy a large amount of sending servers at many locations

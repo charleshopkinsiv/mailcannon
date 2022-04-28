@@ -8,10 +8,8 @@ abstract class DomainManager
 
     protected SqlDataMapper $mapper;
 
-    abstract public function update(DomainObject $obj);
 
-
-    public function create(DomainObject $obj)
+    public function create(&DomainObject $obj)
     {
 
         $this->mapper->insert($obj);
@@ -24,7 +22,15 @@ abstract class DomainManager
         return $this->mapper->getById($id);
     }
 
-    public function deleteById(DomainObject $obj)
+
+    public function update(&DomainObject $obj)
+    {
+
+        $this->mapper->update($obj);
+    }
+
+
+    public function delete(&DomainObject $obj)
     {
 
         $this->mapper->deleteById($obj->getId());

@@ -12,7 +12,7 @@ class Registry
     private static ManagerFactory $manager_factory;
     private static Db $db;
 
-    public static getConfig()
+    public static function getConfig()
     {
 
         if(empty(self::$config))
@@ -22,7 +22,7 @@ class Registry
     }
 
 
-    public static getManagerFactory()
+    public static function getManagerFactory()
     {
 
         if(empty(self::$manager_factory))
@@ -32,7 +32,7 @@ class Registry
     }
 
 
-    public static getDb()
+    public static function getDb()
     {
 
         if(empty(self::$db))

@@ -2,6 +2,8 @@
 
 namespace MailCannon\Various;
 
+use MailCannon\MailCannon;
+
 
 class CmdController
 {
@@ -84,7 +86,7 @@ class CmdController
       
         while(true) {
 
-            printf("\nEnter <email address> or address <id>. . .");
+            printf("\nEnter email address or address id to send to\n");
 
             $line = $this->getCmdLine();
             if(is_int($line)) {
@@ -101,12 +103,14 @@ class CmdController
                 }
                 catch(\Exception $e) {
 
-                    Registry::getManagerFactory("account")->insert(
-                        new Account(
-                            0,
+                    //  Create Account
+                    //  
+                    // Registry::getManagerFactory("account")->insert(
+                    //     new Account(
+                    //         0,
 
-                        )
-                    );
+                    //     )
+                    // );
                 }
                 break;
             }
@@ -119,7 +123,7 @@ class CmdController
 
         while(true) {
 
-            printf("\nEnter list <id>. . .");
+            printf("\nEnter message id. . .");
 
             $line = $this->getCmdLine();
             if(is_int($line)) {
