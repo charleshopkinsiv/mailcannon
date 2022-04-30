@@ -6,7 +6,7 @@ namespace MailCannon\Various;
 class Registry
 {
 
-    private static string $config_file = __DIR__ . "/../../../config.json";
+    private static string $config_file = __DIR__ . "/../../../../config.json";
 
     private static array $config;
     private static ManagerFactory $manager_factory;

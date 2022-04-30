@@ -1,11 +1,9 @@
-CREATE DATABASE mc;
-
 USE mc;
 
 CREATE TABLE message (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject VARCHAR(63) NOT NULL DEFAULT '',
-    body TEXT NOT NULL DEFAULT '',
+    body TEXT NOT NULL,
     template VARCHAR(63) NOT NULL DEFAULT ''
 );
 
@@ -16,7 +14,7 @@ CREATE TABLE address (
     name VARCHAR(63) NOT NULL DEFAULT ''
 );
 
-CREATE TABLE address_list (
+CREATE TABLE address_lists (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(63) NOT NULL DEFAULT ''
 );

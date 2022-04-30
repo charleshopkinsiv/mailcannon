@@ -2,8 +2,8 @@
     "db": {
         "hostname": "localhost",
         "database": "mc",
-        "user": "mc",
-        "password": "pw"
+        "username": "mc",
+        "password": "Rapidpostalsend#3"
     },
     "smtp_server": {
         "hostname": "localhost"

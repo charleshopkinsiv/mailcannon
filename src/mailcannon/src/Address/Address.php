@@ -6,7 +6,7 @@ namespace MailCannon\Address;
 class Address extends DomainObject 
 {
 
-    private int $id;
+    protected int $id;
     private string $username, $domain, $name;
 
     public function __construct(int $id, string $username, string $domain, string $name = "")

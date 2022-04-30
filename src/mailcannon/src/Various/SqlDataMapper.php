@@ -37,6 +37,9 @@ abstract class SqlDataMapper
     }
 
 
+    public abstract function prepareObj(array $data) : DomainObject;
+
+
     public function buildQuery()
     {
 
@@ -82,7 +85,7 @@ abstract class SqlDataMapper
     }
 
     
-    public function getById(int $id) 
+    public function getById(int $id)
     {
 
         $this->where("id = " . $id);
@@ -90,9 +93,7 @@ abstract class SqlDataMapper
         $sql = $this->buildQuery();
 
         if($data = $this->db->query($sql)->single())
-            return $data;
-
-        return false;
+            return $this->prepareObj($data);
     }
 
     public function count() : int

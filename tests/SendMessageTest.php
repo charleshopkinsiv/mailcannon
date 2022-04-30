@@ -26,9 +26,9 @@ final class SendMessageTest extends TestCase
     // }
 
 
-    public function testReciept(): void 
-    {
+    // public function testReciept(): void 
+    // {
 
-        // Log in to test $address on gmail and verify email was recieved
-    }
+    //     // Log in to test $address on gmail and verify email was recieved
+    // }
 }

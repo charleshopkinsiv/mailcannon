@@ -1,12 +1,13 @@
 <?php
 
-namespace MailCannon\Address;
+namespace MailCannon\Message;
 
+use MailCannon\Various\DomainObject;
 
-class Address extends DomainObject 
+class Message extends DomainObject 
 {
 
-    private int $id;
+    protected int $id;
     private string $subject, $template;
 
     public function __construct(int $id, string $subject, string $template)
@@ -25,16 +26,9 @@ class Address extends DomainObject
     }
 
 
-    public function getSubject() : string
-    {
+    public function getSubject() : string { return $this->subject; }
+    public function setSubject(string $subject) { $this->subject = $subject; }
 
-        return $this->subject;
-    }
-
-
-    public function getTemplate() : string
-    {
-
-        return $this->template;
-    }
+    public function getTemplate() : string { return $this->template; }
+    public function setTemplate(string $template) { $this->template = $template; }
 }
