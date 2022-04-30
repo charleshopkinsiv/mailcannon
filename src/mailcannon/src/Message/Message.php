@@ -19,16 +19,13 @@ class Message extends DomainObject
     }
 
 
-    public function getId() : int
-    {
-
-        return $this->id;
-    }
+    public function getId() : int { return $this->id; }
 
 
     public function getSubject() : string { return $this->subject; }
     public function setSubject(string $subject) { $this->subject = $subject; }
 
+    
     public function getTemplate() : string { return $this->template; }
     public function setTemplate(string $template) { $this->template = $template; }
 }

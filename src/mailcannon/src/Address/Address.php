@@ -2,6 +2,7 @@
 
 namespace MailCannon\Address;
 
+use MailCannon\Various\DomainObject;
 
 class Address extends DomainObject 
 {
@@ -19,30 +20,14 @@ class Address extends DomainObject
     }
 
 
-    public function getId() : int 
-    {
+    public function getId() : int { return $this->id; }
 
-        return $this->int;
-    }
+    public function getUsername() : string          { return $this->username; }
+    public function setUsername(string $username)   { $this->username = $username; }
 
+    public function getDomain() : string            { return $this->domain; }
+    public function setDomain(string $domain)       { $this->domain = $domain; }
 
-    public function getUsername() : string 
-    {
-
-        return $this->username;
-    }
-
-
-    public function getDomain() : string 
-    {
-
-        return $this->domain;
-    }
-    
-
-    public function getName() : string 
-    {
-
-        return $this->name;
-    }
+    public function getName() : string              { return $this->name; }
+    public function setName(string $name)           { $this->name = $name; }
 }

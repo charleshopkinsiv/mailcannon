@@ -11,5 +11,4 @@ class AddressManager extends DomainManager
 
         $this->mapper = new AddressMapper();
     }
-    
 }

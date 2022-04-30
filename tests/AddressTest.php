@@ -11,54 +11,60 @@ final class AddressTest extends TestCase
     public function testCreateAddress() : void 
     {
 
-        $manager         = Registry::getManagerFactory()->getManager("address");
-        $address  = new Address(0, "email_name", "test.com", "Test Name");
+        $manager            = Registry::getManagerFactory()->getManager("address");
+        $address            = new Address(0, "email_name", "test.com", "Test Name");
         $manager->create($address);
 
         $this->assertGreaterThan(0, $address->getId());
-
         $this->assertEquals($address, $manager->getById($address->getId()));
+
+        $manager->delete($address);
     }
 
 
-    public function testReadMessage() : void 
+    public function testReadAddress() : void 
     {
 
-        $manager         = Registry::getManagerFactory()->getManager("message");
-        $message         = $manager->getById(1);
-        $this->assertEquals($message->getId(), 1);
+        $manager         = Registry::getManagerFactory()->getManager("address");
+        $address         = $manager->getById(1);
+        $this->assertEquals($address->getId(), 1);
     }
 
 
-    public function testUpdateMessage() : void 
+    public function testUpdateAddress() : void 
     {
 
-        $manager         = Registry::getManagerFactory()->getManager("message");
-        $message  = new Message(0, "Test", self::$subject_orig);
-        $manager->create($message);
+        $manager            = Registry::getManagerFactory()->getManager("address");
+        $address            = new Address(0, "email_name", "test.com", "Test Name");
+        $manager->create($address);
 
-        $message->setSubject(self::$subject_orig . self::$subject_append);
-        $manager->update($message);
+        $address->setUsername("email_name1");
+        $address->setDomain("test1.com");
+        $address->setName("Test Name1");
+        $manager->update($address);
 
-        $message        = $manager->getById($message->getId());
-        $this->assertEquals($message->getSubject(), self::$subject_orig . self::$subject_append);
+        $address            = $manager->getById($address->getId());
+        $this->assertEquals($address->getUsername(), "email_name1");
+        $this->assertEquals($address->getDomain(), "test1.com");
+        $this->assertEquals($address->getName(), "Test Name1");
+
+        $manager->delete($address);
     }
 
 
     public function testDeleteMessage() : void 
     {
 
-        $manager        = Registry::getManagerFactory()->getManager("message");
-        $message        = new Message(0, "Test", self::$subject_orig);
-        $manager->create($message);
-        $new_message_id = $message->getId();
-        $this->assertGreaterThan(0, $new_message_id);
+        $manager        = Registry::getManagerFactory()->getManager("address");
+        $address        = new Address(0, "email_name", "test.com", "Test Name");
+        $manager->create($address);
+        $new_address_id = $address->getId();
+        $this->assertGreaterThan(0, $new_address_id);
 
-
-        $manager->delete($message);
+        $manager->delete($address);
 
         $this->assertNull(
-            $manager->getById($new_message_id)
+            $manager->getById($new_address_id)
         );
     }
 }
