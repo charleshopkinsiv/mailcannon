@@ -144,6 +144,14 @@ abstract class SqlDataMapper
             return $this->prepareObj($data);
     }
 
+
+    public function next()
+    {
+
+        if($data = $this->db->query($sql)->next())
+            return $this->prepareObj($data);
+    }
+
     public function count() : int
     {
         
@@ -155,9 +163,26 @@ abstract class SqlDataMapper
     {
 
         $sql = $this->buildQuery();
-
         return $this->db->query($sql)->resultSet();
     }
+
+
+    public function fetchFirst()
+    {
+
+        $sql = $this->buildQuery();
+        if($first = $this->db->query($sql)->single())
+            return $this->prepareObj($first);
+    }
+
+
+    public function fetchNext()
+    {
+
+        if($next = $this->db->next())
+            return $this->prepareObj($next);
+    }
+
 
     public function getByEmail(string $email) {}
 

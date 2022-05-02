@@ -23,7 +23,7 @@ final class AddressListTest extends TestCase
     public function testReadAddressList() : void 
     {
 
-        $manager         = Registry::getManagerFactory()->getManager("address");
+        $manager         = Registry::getManagerFactory()->getManager("address_list");
         $address_list    = $manager->getById(1);
         $this->assertEquals($address_list->getId(), 1);
     }
@@ -46,7 +46,7 @@ final class AddressListTest extends TestCase
     }
 
 
-    public function testDeleteMessageList() : void 
+    public function testDeleteAddressList() : void 
     {
 
         $manager        = Registry::getManagerFactory()->getManager("address_list");
@@ -60,5 +60,47 @@ final class AddressListTest extends TestCase
         $this->assertNull(
             $manager->getById($new_address_list_id)
         );
+    }
+
+
+    public function testAddressListLinks() : void 
+    {
+
+        // Add user to list
+        $manager         = Registry::getManagerFactory()->getManager("address_list");
+        $address_list    = $manager->getById(1);
+
+        $address_manager = Registry::getManagerFactory()->getManager("address");
+        $address         = $address_manager->getById(1);
+
+        $manager->addAddressToList($address_list, $address);
+
+        // Verify user is on list
+        $in_list = false;
+        foreach($manager->getAddressesForList($address_list) as $address_fr_list) {
+
+            if($address_fr_list == $address) {
+
+                $in_list = true;
+                break;
+            }
+        }
+
+        $this->assertTrue($in_list);
+
+
+        // Remove user and verify removed
+        $manager->removeAddressFromList($address_list, $address);
+
+        $not_in_list = true;
+        foreach($manager->getAddressesForList($address_list) as $address_fr_list) {
+
+            if($address_fr_list == $address) {
+
+                $not_in_list = false;
+            }
+        }
+
+        $this->assertTrue($not_in_list);
     }
 }

@@ -25,14 +25,14 @@ class AddressList extends DomainObject
     public function setName(string $name)           { $this->name = $name; }
 
 
-    // public function getAddresses() : AddressSet
-    // {
+    public function getAddresses() : AddressSet
+    {
 
-    //     if(empty($this->addresses)) {
+        if(empty($this->addresses)) {
 
-    //         $this->addresses = Registry::getManagerFactory("address_list")->getAddresses($this);
-    //     }
+            $this->addresses = Registry::getManagerFactory("address_list")->getAddresses($this);
+        }
 
-    //     return $this->addresses;
-    // }
+        return $this->addresses;
+    }
 }
