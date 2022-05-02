@@ -8,13 +8,13 @@ abstract class SqlDataMapper
 
     private static $instance;
 
-    protected $db;
-    protected $select;
-    private $where;
-    private $order;
-    private $limit;
-    protected $table;
-    private $columns = [];
+    protected   Db          $db;
+    protected   string      $select;
+    private     string      $where;
+    private     string      $order;
+    private     string      $limit;
+    protected   string      $table;
+    protected   array       $columns = [];
 
     public function __construct() 
     {
@@ -23,6 +23,8 @@ abstract class SqlDataMapper
 
         $this->select       = "SELECT * FROM " . $this->table . " ";
         $this->count_query  = "SELECT COUNT(*) as count FROM " . $this->table . " ";
+        $this->order        = "";
+        $this->limit        = "";
     }
 
 
@@ -44,6 +46,52 @@ abstract class SqlDataMapper
     {
 
         return $this->select . $this->where . $this->order . $this->limit;
+    }
+
+
+    public function insert(DomainObject &$obj)
+    {
+
+        $sql = "INSERT INTO " . $this->table . "
+                SET ";
+
+        $i = 1;
+        foreach($this->columns as $column => $function) {
+
+            $sql .= $column . " = '" . $obj->$function() . "'";
+            if($i != count($this->columns))
+                $sql .= ", ";
+            else
+                $sql .= " ";
+
+            $i++;
+        }
+        
+        $this->db->query($sql)->execute();
+        $obj = $this->getById($this->db->lastId());
+    }
+
+
+    public function update(DomainObject $obj)
+    {
+
+        $sql = "UPDATE " . $this->table . "
+                SET ";
+
+        $i = 1;
+        foreach($this->columns as $column => $function) {
+
+            $sql .= $column . " = '" . $obj->$function() . "'";
+            if($i != count($this->columns))
+                $sql .= ", ";
+            else
+                $sql .= " ";
+
+            $i++;
+        }
+
+        $sql .= "WHERE id = " . $obj->getId();
+        $this->db->query($sql)->execute();
     }
 
 

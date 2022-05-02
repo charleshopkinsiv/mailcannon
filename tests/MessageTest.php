@@ -19,8 +19,9 @@ final class MessageTest extends TestCase
         $manager->create($message);
 
         $this->assertGreaterThan(0, $message->getId());
-
         $this->assertEquals($message, $manager->getById($message->getId()));
+
+        $manager->delete($message);
     }
 
 
@@ -37,7 +38,7 @@ final class MessageTest extends TestCase
     {
 
         $manager         = Registry::getManagerFactory()->getManager("message");
-        $message  = new Message(0, "Test", self::$subject_orig);
+        $message         = new Message(0, "Test", self::$subject_orig);
         $manager->create($message);
 
         $message->setSubject(self::$subject_orig . self::$subject_append);
@@ -45,6 +46,8 @@ final class MessageTest extends TestCase
 
         $message        = $manager->getById($message->getId());
         $this->assertEquals($message->getSubject(), self::$subject_orig . self::$subject_append);
+
+        $manager->delete($message);
     }
 
 
