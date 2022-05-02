@@ -8,27 +8,21 @@ use MailCannon\Message\MessageSender;
 final class SendMessageTest extends TestCase
 {
 
-    // public function testSend(): void 
-    // {
+    public function testSend(): void 
+    {
         
-    //     $message =  Registry::getManagerFactory()->getManager("message")
-    //                     ->loadById(1);
+        $message =  Registry::getManagerFactory()->getManager("message")
+                        ->getById(1);
                                 
-    //     $address =  Registry::getManagerFactory()->getManager("address")
-    //                     ->loadById(1);
+        $address =  Registry::getManagerFactory()->getManager("address")
+                        ->getById(1);
 
-    //     $sender = new MessageSender();
-    //     $send_reciept = $sender->sendMessage($message, $address);
+        $sender = new MessageSender();
+        $send_reciept = $sender->sendMessage($message, $address);
+        $this->assertInstanceOf("MailCannon\\Message\\MessageSendReciept", $send_reciept);
 
-    //     $this->assertTrue( // Verify that the email was sent
-    //         $sender->verifySends([$send_reciept])
-    //     );
-    // }
-
-
-    // public function testReciept(): void 
-    // {
-
-    //     // Log in to test $address on gmail and verify email was recieved
-    // }
+        $this->assertTrue( // Verify that the email was sent, check mail.log
+            $sender->verifySend($send_reciept)
+        );
+    }
 }

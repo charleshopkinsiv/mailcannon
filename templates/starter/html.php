@@ -1,3 +1,6 @@
+MIME-Version: 1.0
+Content-Type: text/html
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>

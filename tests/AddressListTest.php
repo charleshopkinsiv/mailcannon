@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-final class SendEmailTest extends TestCase
+final class AddressListTest extends TestCase
 {
 
 

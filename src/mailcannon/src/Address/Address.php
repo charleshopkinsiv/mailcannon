@@ -30,4 +30,11 @@ class Address extends DomainObject
 
     public function getName() : string              { return $this->name; }
     public function setName(string $name)           { $this->name = $name; }
+
+
+    public function getToAddress()
+    {
+        
+        return ($this->name ?: $this->username)  . " <" . $this->username . "@" . $this->domain . ">";
+    }
 }

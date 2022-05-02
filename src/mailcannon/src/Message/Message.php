@@ -28,4 +28,11 @@ class Message extends DomainObject
     
     public function getTemplate() : string { return $this->template; }
     public function setTemplate(string $template) { $this->template = $template; }
+
+    
+    public function loadTemplate()
+    {
+
+        return file_get_contents(__DIR__ . "/../../../../templates/" . $this->template);
+    }
 }
