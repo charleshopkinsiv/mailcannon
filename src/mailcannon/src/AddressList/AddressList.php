@@ -3,6 +3,8 @@
 namespace MailCannon\AddressList;
 
 use MailCannon\Various\DomainObject;
+use MailCannon\Address\AddressLazySet;
+use MailCannon\Various\Registry;
 
 class AddressList extends DomainObject 
 {
@@ -25,12 +27,13 @@ class AddressList extends DomainObject
     public function setName(string $name)           { $this->name = $name; }
 
 
-    public function getAddresses() : AddressSet
+    public function getAddresses() : AddressLazySet
     {
 
         if(empty($this->addresses)) {
 
-            $this->addresses = Registry::getManagerFactory("address_list")->getAddresses($this);
+            $this->addresses = Registry::getManagerFactory()
+                                ->getManager("address_list")->getAddressesForList($this);
         }
 
         return $this->addresses;

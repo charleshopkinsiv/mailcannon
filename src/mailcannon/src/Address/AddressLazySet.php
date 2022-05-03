@@ -40,6 +40,10 @@ class AddressLazySet implements \Iterator
             $this->current_item = $next;
             $this->key++;
         }
+        else {
+            
+            unset($this->current_item);
+        }
     }
 
 

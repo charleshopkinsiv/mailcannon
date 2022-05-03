@@ -3,6 +3,7 @@
 namespace MailCannon\Message;
 
 use MailCannon\Address\Address;
+use MailCannon\AddressList\AddressList;
 
 class MessageSender
 {
@@ -40,6 +41,20 @@ class MessageSender
 
             return new MessageSendReciept($message, $address, $reciept_date);
         }
+    }
+
+
+    public function sendMessageToList(Message $message, AddressList $list) : array
+    {
+
+        $reciepts = [];
+
+        foreach($list->getAddresses() as $address) {
+
+            $reciepts[] = $this->sendMessage($message, $address);
+        }
+
+        return $reciepts;
     }
 
 
