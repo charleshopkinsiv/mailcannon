@@ -25,6 +25,7 @@ abstract class SqlDataMapper
         $this->count_query  = "SELECT COUNT(*) as count FROM " . $this->table . " ";
         $this->order        = "";
         $this->limit        = "";
+        $this->where        = "";
     }
 
 
@@ -37,6 +38,9 @@ abstract class SqlDataMapper
 
         return self::$instance;
     }
+
+
+    public function getColumns() : array { return $this->columns; }
 
 
     public abstract function prepareObj(array $data) : DomainObject;

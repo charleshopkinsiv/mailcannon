@@ -4,6 +4,11 @@ namespace MailCannon\Message;
 
 use MailCannon\Address\Address;
 use MailCannon\AddressList\AddressList;
+use MailCannon\Various\EncryptLite;
+use MailCannon\Various\Registry;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class MessageSender
 {
@@ -11,37 +16,70 @@ class MessageSender
     private static string $default_send_address = "newsletter@findonlinejobstoday.com";
     private static string $mail_log_file        = "/var/log/mail.log";
 
-    private string $send_address;
+    private string $send_address, $mime_boundary, $unsub_base;
 
     public function __construct()
     {
 
-        $this->send_address = self::$default_send_address;
+        $this->send_address     = self::$default_send_address;
+        $this->mime_boundary    = "MB7--------------------NC33999202934847398273";
+        $this->unsub_base       = "https://findonlinejobstoday.com/email/unsubscribe";
+        $this->dkim_key         = Registry::getConfig()['dkim']['private_key'] ?: "";
     }
 
 
     public function sendMessage(Message $message, Address $address)
     {
 
-        $recievers_address = $address->getToAddress();
+        $this->message = $message;
+        $this->address = $address;
 
-        if(mail(
-            $recievers_address,
-            $message->getSubject(),
-            $message->loadTemplate(),
-            [
-                "From"              => $this->send_address,
-                "Reply-To"          => $this->send_address,
-                "MIME-Version"      => "1.0",
-                "Content-Type"      => "text/html"
-            ]
-        )) {
+        $mail = new PHPMailer(true);
+
+        try {
+
+            // $recievers_address = $address->getToAddress();
+            $mail->setFrom($this->send_address, "Online Earning");
+            $mail->addAddress($address->getUsername() . "@" . $address->getDomain(), $address->getName());
+
+            if(!empty($this->dkim_key)) {
+
+                $mail->DKIM_domain          = explode("@", $this->send_address)[1];
+                $mail->DKIM_private         = $this->dkim_key;
+                $mail->DKIM_selector        = "phpmailer";
+                $mail->DKIM_pasphrase       = "";
+                $mail->DKIM_identity        = $mail->From;
+            }
+
+            $mail->isHTML(true);
+            $mail->Subject      = $message->getSubject();
+            $mail->Body         = $message->loadTemplate($this);
+            $mail->AltBody      = "This is the plaintext";
+
+            $mail->send();
 
             $reciept_date = date("M ") . str_pad(date("j"), 2, " ", STR_PAD_LEFT) . date(" H:i:s");
 
             return new MessageSendReciept($message, $address, $reciept_date);
         }
+        catch(Exception $e) {
+
+            printf("Message Error: %s\n\n", $mail->ErrorInfo);
+        }
     }
+
+
+    public function getUnsubscribeLink()
+    {
+
+        $message = $this->address->getUsername() . "@" . $this->address->getDomain();
+        $key = "allekjrj29k2j1e89778743874";
+
+        return $this->unsub_base . "?key=" . urlencode(EncryptLite::encrypt($message, $key, true));
+    }
+
+
+    public function getMimeBoundary() : string { return "--" . $this->mime_boundary . "\n"; }
 
 
     public function sendMessageToList(Message $message, AddressList $list) : array
@@ -59,7 +97,7 @@ class MessageSender
 
 
     public function verifySend(MessageSendReciept $reciept) : bool
-    {
+    {   // Scans Postfix logs for send
 
         $max_retries = 5;
         $sleep_between_retries = 3;

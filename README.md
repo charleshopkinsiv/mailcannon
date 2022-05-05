@@ -22,13 +22,35 @@ $ sudo php install.php
 $ mailcannon
 
 Welcome to MailCannon
-    - Make a selection below. . .
-    1. Send Message to Address
-    2. Send Message to Address List
-    3. Message Manager
-    4. Address Manager
-    5. Address List Manager
-    6. Send Log
+    - Make a selection below
+    1. - Send Message to Address
+    2. - Send Message to Address List
+    3. - Message Manager
+    4. - Address Manager
+    5. - Address List Manager
+    6. - Send Log
+
+    - Message Manager
+    1. - Create
+    2. - List All
+    3. - Update
+    4. - Delete
+    5. - List Templates
+
+    - Address Manager
+    1. - Create
+    2. - List All
+    3. - Update
+    4. - Delete
+
+    - Address_list Manager
+    1. - Create
+    2. - List All
+    3. - Update
+    4. - Delete
+    5. - Add Address To List
+    6. - List Addresses For List
+    7. - Remove Address From List
 ```
 
 
@@ -41,7 +63,10 @@ Welcome to MailCannon
 * Send a message to an email address
 * Send a message to an addresss list
 * Address, Message, Message List
-* Hardcoded templates
+* Hardcoded message content
+* Analyze Sends
+* Basic Stats
+* CLI control
 
 
 
@@ -49,13 +74,14 @@ Welcome to MailCannon
 
 *Version 1.1 Galleon* - 8/2022
 
-* Address tags
+* Addresses import / export - *1.0.1*
+* List import / export (csv, json) - *1.0.1*
 * List message sequence's
-* Scheduled sends
 * Sending daemon
+* Address tags
+* Scheduled sends
 * Multithreaded sending
-* List import / export
-* Addresses import / export
+* Web GUI
 
 
 

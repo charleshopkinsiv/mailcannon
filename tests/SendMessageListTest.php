@@ -7,23 +7,23 @@ use MailCannon\Message\MessageSender;
 final class SendMessageListTest extends TestCase
 {
 
-    public function testSend(): void 
+    public function testSendList(): void 
     {
-        
+        return;
         $message        =  Registry::getManagerFactory()->getManager("message")
                             ->getById(1);
-                                
-        $address_one    =  Registry::getManagerFactory()->getManager("address")
-                            ->getById(1);
-
-        $address_two    =  Registry::getManagerFactory()->getManager("address")
-                            ->getById(2);
 
         $address_list   =  Registry::getManagerFactory()->getManager("address_list")
                             ->getById(1);
 
+
+        $address_one    =  Registry::getManagerFactory()->getManager("address")
+                            ->getById(1);
         Registry::getManagerFactory()->getManager("address_list")
-            ->addAddressToList($address_list, $address_one);
+                            ->addAddressToList($address_list, $address_one);
+
+        $address_two    =  Registry::getManagerFactory()->getManager("address")
+                            ->getById(2);
         Registry::getManagerFactory()->getManager("address_list")
             ->addAddressToList($address_list, $address_two);
 

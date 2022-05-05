@@ -30,9 +30,13 @@ class Message extends DomainObject
     public function setTemplate(string $template) { $this->template = $template; }
 
     
-    public function loadTemplate()
+    public function loadTemplate(MessageSender $sender)
     {
 
-        return file_get_contents(__DIR__ . "/../../../../templates/" . $this->template);
+        ob_start();
+            require __DIR__ . "/../../../../templates/" . $this->template;
+            $buffer = ob_get_contents();
+        ob_end_clean();
+        return $buffer;
     }
 }

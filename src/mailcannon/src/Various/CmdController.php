@@ -1,8 +1,15 @@
 <?php
+//
+//  Make large then implement everything with a CmdInterface class
+//  - SendEmailMessageToUser cmd input implemented in getCmdLine(string $text = "", array $types = [])
 
 namespace MailCannon\Various;
 
 use MailCannon\MailCannon;
+use MailCannon\Message\MessageSender;
+use MailCannon\Message\Message;
+use MailCannon\Address\Address;
+use MailCannon\AddressList\AddressList;
 
 
 class CmdController
@@ -10,6 +17,25 @@ class CmdController
 
     private MailCannon  $mail_cannon;
     private bool        $running = true;
+
+
+    private static $start_options = [
+        "\t- Make a selection below\n",
+        "\t1 - Send Message to Address\n",
+        "\t2 - Send Message to Address List\n",
+        "\t3 - Message Manager\n",
+        "\t4 - Address Manager\n",
+        "\t5 - Address List Manager\n",
+        "\t6 - Send Log\n",
+        "\t7 - Stats\n\n\t"
+    ];
+
+    private static $manager_options = [
+        "\t1 - Create\n",
+        "\t2 - List All\n",
+        "\t3 - Update\n",
+        "\t4 - Delete\n",
+    ];
 
 
     public function __construct(MailCannon $mail_cannon)
@@ -23,31 +49,38 @@ class CmdController
     {
 
         printf("Welcome to MailCannon\n\n");
-        self::printOptions();
+        $this->start();
 
-        while($this->running) {
+        printf("Exiting. . \n\n");
+        exit();
+    }
 
-            $this->handleCommand();
+
+    public function start()
+    {
+        while(true) {
+
+            $this->handleCommand(self::printOptions(self::$start_options));
         }
     }
 
 
-    public static function printOptions()
+    public static function printOptions(array $options)
     {
 
-        printf("\t- Make a selection below. . .\n");
-        printf("\t1 - Send Message to Address\n");
-        printf("\t2 - Send Message to Address List\n");
-        printf("\t3 - Message Manager\n");
-        printf("\t4 - Address Manager\n");
-        printf("\t5 - Address List Manager\n");
-        printf("\t6 - Send Log\n");
+        foreach($options as $line) {
+
+            printf($line);
+        }
     }
 
 
-    public function getCmdLine()
+    public function getCmdLine(string $text = "")
     {
         
+        if(!empty($text))
+            printf("\t" . $text . "\t");
+
         $handle = fopen("php://stdin","r");
         $line = trim(fgets($handle));
         return $line;
@@ -66,13 +99,13 @@ class CmdController
                 $this->sendMessageToAddressList();
                 break;
             case 3;
-                $this->messageManager();
+                $this->loadManager("message");
                 break;
             case 4; 
-                $this->addressManager();
+                $this->loadManager("address");
                 break;
             case 5;
-                $this->addressListManager();
+                $this->loadManager("address_list");
                 break;
             case 6;
                 $this->sendLog();
@@ -86,55 +119,205 @@ class CmdController
       
         while(true) {
 
-            printf("\nEnter email address or address id to send to\n");
+            printf("Enter email address or address id to send to\n\t");
 
             $line = $this->getCmdLine();
-            if(is_int($line)) {
+            if(is_numeric($line)) {
 
-                $account = Registry::getManagerFactory("account")->getById($line);
+                $address = Registry::getManagerFactory()->getManager("address")->getById($line);
                 break;
             }
             elseif(filter_var($line, FILTER_VALIDATE_EMAIL)) {
 
-                $account = Registry::getManagerFactory("account")->getByAddress($line);
-                try {
-
-
-                }
-                catch(\Exception $e) {
-
-                    //  Create Account
-                    //  
-                    // Registry::getManagerFactory("account")->insert(
-                    //     new Account(
-                    //         0,
-
-                    //     )
-                    // );
-                }
+                $address = new Address(0, explode("@", $line)[0], explode("@", $line)[1]);
                 break;
             }
             else {
 
-                printf("\nBad entry. . .\n");
+                printf("Bad entry. . .\n");
             }
         }
 
 
         while(true) {
 
-            printf("\nEnter message id. . .");
+            printf("Enter message id\n\t");
 
             $line = $this->getCmdLine();
-            if(is_int($line)) {
+            if(is_numeric($line)) {
 
-                $account = Registry::getManagerFactory("account_list")->getById($line);
+                $message = Registry::getManagerFactory()->getManager("message")->getById($line);
                 break;
             }
             else {
 
-                printf("\nBad entry. . .\n");
+                printf("Bad entry. . .\n");
             }
+        }
+
+        $sender = new MessageSender;
+        $send_reciept = $sender->sendMessage($message, $address);
+
+        if($sender->verifySend($send_reciept)) {
+
+            printf("Successful send\n\n\n");
+        }
+    }
+
+    
+    private function sendMessageToAddressList()
+    {
+
+        $address_list   = Registry::getManagerFactory()->getManager("address_list")
+                            ->getById($this->getCmdLine("Address list id"));
+        $message        = Registry::getManagerFactory()->getManager("message")
+                            ->getById($this->getCmdLine("Message id"));
+
+        $sender = new MessageSender;
+        $send_reciepts = $sender->sendMessageToList(
+            $message,
+            $address_list
+        );
+
+        foreach($send_reciepts as $reciept) {
+
+            if($sender->verifySend($reciept)) {
+
+                printf("\tSuccessful send to %32s\n\n", $reciept->getAddress()->getUsername() . "@" . $reciept->getAddress()->getDomain());
+            }
+        }
+    }
+
+
+    private function loadManager(string $type)
+    {
+
+        printf("\t- %s Manager\n", $type);
+        $options = self::$manager_options;
+
+        if($type == "message")
+            $options = array_merge($options, ["\t5 - List Templates\n"]);
+
+        if($type == "address_list")
+            $options = array_merge($options, ["\t5 - Add Address to List\n", "\t6 - List Addresses for List\n", "\t7 - Remove Address from List\n"]);
+
+        self::printOptions($options);
+
+        switch($this->getCmdLine()) {
+
+            case 1:
+                $obj = $this->loadObject($type);
+                Registry::getManagerFactory()->getManager($type)
+                    ->create($obj);
+                return;
+            case 2:
+                Registry::getManagerFactory()->getManager($type)
+                    ->printAll();
+                return;
+            case 3:
+                Registry::getManagerFactory()->getManager($type)
+                    ->update($this->loadUpdatedObject($type));
+                return;
+            case 4:
+                $id = $this->getCmdLine(ucfirst($type) . " id to delete");
+                Registry::getManagerFactory()->getManager($type)
+                    ->delete(Registry::getManagerFactory()->getManager($type)
+                        ->getById($id));
+                return;
+
+            case 5:
+
+                if($type == "message") {
+
+                    Registry::getManagerFactory()->getManager($type)->printTemplates();
+                    return;
+                }
+
+                if($type == "address_list") {
+
+                    Registry::getManagerFactory()->getManager($type)->addAddressToList(
+                        Registry::getManagerFactory()->getManager("address_list")
+                            ->getById($this->getCmdLine("Address list id")),
+                        Registry::getManagerFactory()->getManager("address")
+                            ->getById($this->getCmdLine("Address id"))
+                    );
+                    return;
+                }
+
+            case 6:
+                if($type == "address_list") {
+
+                    Registry::getManagerFactory()->getManager($type)->printAddressesForList(
+                        Registry::getManagerFactory()->getManager("address_list")
+                            ->getById($this->getCmdLine("Address list id"))
+                        );
+                    return;
+                }
+
+            case 7: 
+                if($type == "address_list") {
+                    Registry::getManagerFactory()->getManager($type)->removeAddressFromList(
+                        Registry::getManagerFactory()->getManager("address_list")
+                            ->getById($this->getCmdLine("Address list id")),
+                        Registry::getManagerFactory()->getManager("address")
+                            ->getById($this->getCmdLine("Address id"))
+                        );
+                    return;
+                }
+        }
+    }
+
+
+    private function loadObject(string $type)
+    {
+
+        switch($type) {
+
+            case 'address':
+                return new Address(
+                    0,
+                    $this->getCmdLine("Username <username>@"),
+                    $this->getCmdLine("Hostname @<hostname>"),
+                    $this->getCmdLine("Name")
+                );
+            case 'message':
+                return new Message(
+                    0,
+                    $this->getCmdLine("Subject"),
+                    $this->getCmdLine("Template")
+                );
+            case 'address_list':
+                return new AddressList(
+                    0,
+                    $this->getCmdLine("Name")
+                );
+        }
+    }
+
+
+    private function loadUpdatedObject(string $type)
+    {
+
+        switch($type) {
+
+            case 'address':
+                $address = Registry::getManagerFactory()->getManager($type)
+                    ->getById($this->getCmdLine("Address id"));
+                $address->setUsername($this->getCmdLine("Username; " . $address->getUsername() . " = "));
+                $address->setDomain($this->getCmdLine("Domain; " . $address->getDomain() . " = "));
+                $address->setName($this->getCmdLine("Name; " . $address->getName() . " = "));
+                return $address;
+            case 'message':
+                $message = Registry::getManagerFactory()->getManager($type)
+                    ->getById($this->getCmdLine("Message id"));
+                $message->setSubject($this->getCmdLine("Subject; " . $message->getSubject() . " = "));
+                $message->setTemplate($this->getCmdLine("Template; " . $message->getTemplate() . " = "));
+                return $message;
+            case 'address_list':
+                $address_list = Registry::getManagerFactory()->getManager($type)
+                    ->getById($this->getCmdLine("Message id"));
+                $address_list->setSubject($this->getCmdLine("Name; " . $address_list->getName() . " = "));
+                return $address_list;
         }
     }
 }

@@ -36,4 +36,21 @@ class AddressListManager extends DomainManager
 
         $this->mapper->removeAddressFromList($list, $address);
     }
+
+
+    public function printAddressesForList(AddressList $list)
+    {
+
+        printf("\n\n%32s |%32s |%32s |\n", "Id", "Address Id", "Name");
+        printf("%'-101s|\n", " ");
+
+        $user_count = 0;
+        foreach($this->mapper->getAddressesForList($list) as $address) {
+
+            printf("%32s |%32s |%32s |\n", $address->getId(), $address->getUsername() . "@" . $address->getDomain(), $address->getName());
+            $user_count++;
+        }
+
+        printf("%'-101s|\n\tUser Count: %d\n\n\n", " ", $user_count);
+    }
 }
