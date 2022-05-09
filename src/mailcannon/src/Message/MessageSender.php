@@ -23,7 +23,7 @@ class MessageSender
 
         $this->send_address     = self::$default_send_address;
         $this->mime_boundary    = "MB7--------------------NC33999202934847398273";
-        $this->unsub_base       = "https://findonlinejobstoday.com/email/unsubscribe";
+        $this->unsub_base       = "https://findonlinejobstoday.com/unsubscribe";
         $this->dkim_key         = Registry::getConfig()['dkim']['private_key'] ?: "";
     }
 
@@ -59,8 +59,10 @@ class MessageSender
             $mail->send();
 
             $reciept_date = date("M ") . str_pad(date("j"), 2, " ", STR_PAD_LEFT) . date(" H:i:s");
+            $reciept = new MessageSendReciept($message, $address, $reciept_date);
+            MessageLog::insertSend($reciept);
 
-            return new MessageSendReciept($message, $address, $reciept_date);
+            return $reciept;
         }
         catch(Exception $e) {
 

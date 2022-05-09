@@ -59,13 +59,11 @@ Welcome to MailCannon
 
 ![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/cannon.jpg)
 
-*Release 1.0 Cannon* - 5/2022
+*Release 1.0 Cannon* - Current
 * Send a message to an email address
 * Send a message to an addresss list
 * Address, Message, Message List
 * Hardcoded message content
-* Analyze Sends
-* Basic Stats
 * CLI control
 
 
@@ -74,14 +72,16 @@ Welcome to MailCannon
 
 *Version 1.1 Galleon* - 8/2022
 
-* Addresses import / export - *1.0.1*
-* List import / export (csv, json) - *1.0.1*
-* List message sequence's
 * Sending daemon
-* Address tags
 * Scheduled sends
+* List message sequence's
+* Address tags
+* Addresses import / export
+* List import / export (csv, text)
 * Multithreaded sending
 * Web GUI
+* Analyze Sends
+* Basic Stats
 
 
 
