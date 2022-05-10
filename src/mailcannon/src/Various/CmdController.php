@@ -235,12 +235,18 @@ class CmdController
 
                 if($type == "address_list") {
 
-                    Registry::getManagerFactory()->getManager($type)->addAddressToList(
-                        Registry::getManagerFactory()->getManager("address_list")
-                            ->getById($this->getCmdLine("Address list id")),
-                        Registry::getManagerFactory()->getManager("address")
-                            ->getById($this->getCmdLine("Address id"))
-                    );
+                    $address_list   = $this->getCmdLine("Address list id");
+                    $ids            = $this->getCmdLine("Address id's to add (Sep. Mult. by ,)\n\t");
+                    foreach(explode(",", $ids) as $id) {
+                            
+                        $id = trim($id);
+                        Registry::getManagerFactory()->getManager($type)->addAddressToList(
+                            Registry::getManagerFactory()->getManager("address_list")
+                                ->getById($address_list),
+                            Registry::getManagerFactory()->getManager("address")
+                                ->getById($id)
+                        );
+                    }
                     return;
                 }
 
@@ -256,12 +262,20 @@ class CmdController
 
             case 7: 
                 if($type == "address_list") {
-                    Registry::getManagerFactory()->getManager($type)->removeAddressFromList(
-                        Registry::getManagerFactory()->getManager("address_list")
-                            ->getById($this->getCmdLine("Address list id")),
-                        Registry::getManagerFactory()->getManager("address")
-                            ->getById($this->getCmdLine("Address id"))
+
+                    $address_list   = $this->getCmdLine("Address list id");
+                    $ids            = $this->getCmdLine("Address id's to remove from list (Sep. Mult. by ,)\n\t");
+                    foreach(explode(",", $ids) as $id) {
+
+                        $id = trim($id);
+                        Registry::getManagerFactory()->getManager($type)->removeAddressFromList(
+                            Registry::getManagerFactory()->getManager("address_list")
+                                ->getById($address_list),
+                            Registry::getManagerFactory()->getManager("address")
+                                ->getById($id)
                         );
+                    }
+
                     return;
                 }
         }
