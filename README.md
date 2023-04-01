@@ -70,7 +70,7 @@ Welcome to MailCannon
 
 ![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/galleon.jpg)
 
-*Version 1.1 Galleon* - 8/2022
+*Version 1.1 Galleon*
 
 * Sending daemon
 * Scheduled sends
@@ -87,7 +87,7 @@ Welcome to MailCannon
 
 ![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/fleet.jpg)
 
-*Version 1.2 Treasure Fleet* **Private** - 10/2022
+*Version 1.2 Treasure Fleet* **Private**
 
 * Enhanced tracking and optimization
 * Automated command server deployment and config
@@ -99,7 +99,7 @@ Welcome to MailCannon
 
 ![UML Class Diagram](https://raw.githubusercontent.com/charleshopkinsiv/mailcannon/main/public/img/kraken.jpg)
 
-*Version 1.3 Kraken* **Private** - 12/2022
+*Version 1.3 Kraken* **Private**
 
 * I.P. reputation tracking
 * Machine Learning optimized I.P. management
